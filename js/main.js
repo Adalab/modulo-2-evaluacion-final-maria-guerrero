@@ -17,7 +17,7 @@ function getApiData() {
     let inputValueEl = inputValue.value;
     // let inputValueEl = 'Nadja';
 
-    fetch(`https://api.jikan.moe/v3/search/anime?q=${inputValueEl}&limit=6`).then(response => response.json())
+    fetch(`https://api.jikan.moe/v3/search/anime?q=${inputValueEl}`).then(response => response.json())
     .then(data => {
         series = data.results;
         paintSeries();
@@ -70,8 +70,8 @@ function addSerie(ev) {
 
     // Y pusheamos en favoritos las series encontradas
     favorites.push({
-        id: foundSerie.mal_id,
-        image: foundSerie.image_url,
+        mal_id: foundSerie.mal_id,
+        image_url: foundSerie.image_url,
         title: foundSerie.title
     });
     paintFavoriteItems(); // <-- lanzamos la función de abajo
@@ -82,8 +82,8 @@ function addSerie(ev) {
 function getFavoriteHtmlCode(item) {
 
     let htmlCode = '';
-    htmlCode += `<li class="js-favorites favoritesStyle">`;
-    htmlCode += `<img class="serie_image" src="${item.image_url}"`;
+    htmlCode += `<li class="js-favorites favoritesListStyle">`;
+    htmlCode += `<img class="serie_image_favs" src="${item.image_url}"`;
     htmlCode += `<h3 class="serie_name">${item.title}</h3>`;
     htmlCode += '</li>';
     return htmlCode;

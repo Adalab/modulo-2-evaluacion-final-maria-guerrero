@@ -7,7 +7,7 @@
     <title>Modulo 2. Evaluación finals</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body class="body">
@@ -19,7 +19,6 @@
         <form class="js-form">
             <input class="js-input inputStyles" type="text" placeholder="Introduce la serie">
             <button class="js-search searchStyles" type="button">Buscar</button>
-            <!-- <button class="resetStyles" type="button">Reset</button> -->
         </form>
     </header class="header">
 
@@ -27,6 +26,9 @@
 
         <section class="sectionFav">
             <p class="pFavsText">Series favoritas:</p>
+            <div class="positionReset">
+            <button class="resetStyles" type="button">Reset</button>
+            </div>
             <ul class="js-favorite-list ulStylesFav">
                 <!-- lista de series favoritas-->
             </ul>
@@ -39,10 +41,9 @@
             </ul>
         </section>
     </main>
-    <tbody class="js-favorites"></tbody>
     
-    <footer>
-
+    <footer class="footer">
+        <p>&copy; María Guerrero. 2021</p>
     </footer>
 
     <script src="./js/main.js"></script>
