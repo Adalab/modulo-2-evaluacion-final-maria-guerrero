@@ -30,7 +30,7 @@
     height: 100vh;
     color: white;
     border-right: 2px solid;
-    border-image: linear-gradient(to bottom, #53a8b3b4, #5d57a5a6) 1;
+    border-image: linear-gradient(to bottom, #53a8b3b4, #360d6b6e) 1;
     width: 30vw;
     padding: 20px;
     font-family: 'Lato', sans-serif;
