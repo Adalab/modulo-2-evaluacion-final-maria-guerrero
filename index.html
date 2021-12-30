@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modulo 2. Evaluación finals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+<body class="body">
+
+    <header class="header">
+        
+        <h1 class="title">Buscador de series de anime</h1>
+
+        <form class="js-form">
+            <input class="js-input inputStyles" type="text" placeholder="Introduce la serie">
+            <button class="js-search searchStyles" type="button">Buscar</button>
+            <!-- <button class="resetStyles" type="button">Reset</button> -->
+        </form>
+    </header class="header">
+
+    <main class="main">
+
+        <section class="sectionFav">
+            <p class="pFavsText">Series favoritas:</p>
+            <ul class="js-favorite-list ulStylesFav">
+                <!-- lista de series favoritas-->
+            </ul>
+        </section>
+
+        <section class="sectionSearch">
+            <p class="pResultsText">Resultados:</p>
+            <ul class="js-series-list ulStylesSearch">
+                <!-- lista de series -->
+            </ul>
+        </section>
+    </main>
+    <tbody class="js-favorites"></tbody>
+    
+    <footer>
+
+    </footer>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>
