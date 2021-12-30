@@ -58,15 +58,22 @@ function listenAddSeries() {
 // 4. IDENTIFICAMOS CUAL ES EL ELEMENTO CLICKADO
 function addSerie(ev) {
     const clickId = parseInt(ev.currentTarget.dataset.id);
-
-    // buscamos en el array cual es el elemento que coincide con el id que hemos clickado, iterando:
-    let foundSerie;
-
-    for (const serie of series) {
-        if(serie.mal_id === clickId) { // <-- si el id de la serie, es igual al id del que he clikado, entonces:
-            foundSerie = serie; // <-- Guardamos la serie en la serie encontrada
+    // Vemos si la serie está ya en favoritos
+    let foundItem;
+    for (const item of favorites) { // <-- recorremos todos los favoritos
+        if(item.mal_id === clickId) { 
+            foundItem = item;
         }      
     }
+    
+    if(foundItem === undefined) {
+        // 1. buscamos en el array cual es el elemento que coincide con el id que hemos clickado, iterando:
+        let foundSerie;
+        for (const serie of series) {
+            if(serie.mal_id === clickId) { // <-- si el id de la serie, es igual al id del que he clikado, entonces:
+                foundSerie = serie; // <-- Guardamos la serie en la serie encontrada
+            }      
+        }
 
     // Y pusheamos en favoritos las series encontradas
     favorites.push({
@@ -74,6 +81,10 @@ function addSerie(ev) {
         image_url: foundSerie.image_url,
         title: foundSerie.title
     });
+}
+
+
+    
     paintFavoriteItems(); // <-- lanzamos la función de abajo
 };
 
