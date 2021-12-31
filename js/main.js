@@ -4,6 +4,7 @@ const formElement = document.querySelector('.js-form');
 const seriesList = document.querySelector('.js-series-list');
 const favoriteList = document.querySelector('.js-favorite-list');
 const searchBtn = document.querySelector('.js-search');
+const resetBtn = document.querySelector('.js-reset-btn');
 // GUARDAMOS LAS SERIES EN UN ARRAY
 let series = [];
 // GUARDAMOS LAS SERIES FAVORITAS EN UN ARRAY
@@ -81,10 +82,7 @@ function addSerie(ev) {
         image_url: foundSerie.image_url,
         title: foundSerie.title
     });
-}
-
-
-    
+} 
     paintFavoriteItems(); // <-- lanzamos la función de abajo
 };
 
@@ -108,8 +106,17 @@ function paintFavoriteItems() {
     }
 };
 
+// 6. HACEMOS QUE EL BOTÓN DE RESET FUNCIONE
+function resetActiveBtn(event) {
+    event.preventDefault();
+    if(resetBtn.value === true) {
+        favoriteList.innerHTML = '';
+    }
+}
+
 // ARRANCAMOS LA APP
 getApiData();
 
 // CREAMOS EL EVENTO
 searchBtn.addEventListener('click', getApiData);
+resetBtn.addEventListener('click', resetActiveBtn);

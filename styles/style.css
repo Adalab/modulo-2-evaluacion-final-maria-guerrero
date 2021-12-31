@@ -15,7 +15,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 40px;
+    padding: 50px;
 }
 .title {
     text-align: center;
@@ -100,7 +100,12 @@
             }
             .serie_image {
                 box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.301);
+                margin-bottom: 7px;
             }
+                .serie_image:hover {
+                    transform: scale(1.03);
+                    transition: transform ease 0.2s;
+                }
 
 .main {
     display: flex;
