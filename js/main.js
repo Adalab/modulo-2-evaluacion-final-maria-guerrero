@@ -92,7 +92,10 @@ function getFavoriteHtmlCode(item) {
 
     let htmlCode = '';
     htmlCode += `<li class="js-favorites favoritesListStyle">`;
-    htmlCode += `<img class="serie_image_favs" src="${item.image_url}"`;
+    htmlCode += `<div class="divImageEquis">`;
+    htmlCode += `<img class="serie_image_favs" src="${item.image_url}">`;
+    htmlCode += `<p class="equisIcon">x</p>`;
+    htmlCode += `</div>`;
     htmlCode += `<h3 class="serie_name">${item.title}</h3>`;
     htmlCode += '</li>';
     return htmlCode;
