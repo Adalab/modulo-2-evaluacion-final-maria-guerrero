@@ -5,6 +5,7 @@ const seriesList = document.querySelector('.js-series-list');
 const favoriteList = document.querySelector('.js-favorite-list');
 const searchBtn = document.querySelector('.js-search');
 const resetBtn = document.querySelector('.js-reset-btn');
+const equisBtn = document.querySelector('.js-equis-icon');
 // GUARDAMOS LAS SERIES EN UN ARRAY
 let series = [];
 // GUARDAMOS LAS SERIES FAVORITAS EN UN ARRAY
@@ -83,6 +84,7 @@ function addSerie(ev) {
         title: foundSerie.title
     });
 } 
+    setLocalStorage();
     paintFavoriteItems(); // <-- lanzamos la función de abajo
 };
 
@@ -94,7 +96,7 @@ function getFavoriteHtmlCode(item) {
     htmlCode += `<li class="js-favorites favoritesListStyle">`;
     htmlCode += `<div class="divImageEquis">`;
     htmlCode += `<img class="serie_image_favs" src="${item.image_url}">`;
-    htmlCode += `<p class="equisIcon">x</p>`;
+    htmlCode += `<button class="js-equis-icon equisIcon">x</button>`;
     htmlCode += `</div>`;
     htmlCode += `<h3 class="serie_name">${item.title}</h3>`;
     htmlCode += '</li>';
@@ -109,13 +111,25 @@ function paintFavoriteItems() {
     }
 };
 
-// 6. HACEMOS QUE EL BOTÓN DE RESET FUNCIONE
-function resetActiveBtn(event) {
-    event.preventDefault();
-    if(resetBtn.value === true) {
-        favoriteList.innerHTML = '';
-    }
+// 6. GUARDAMOS EN EL LOCAL STORAGE
+function setLocalStorage() {
+    const stringifyFavorites = JSON.stringify(favorites);
+    localStorage.setItem('favorites', stringifyFavorites);
+};
+
+// 7. HACEMOS QUE EL BOTÓN DE RESET FUNCIONE
+function resetActiveBtn() {
+    favorites = [];
+
+    // setLocalStorage();
+    paintSeries();
+    paintFavoriteItems();
 }
+
+// // 8. HACEMOS QUE EL BOTÓN X ELIMINE UNA SERIE
+// function equisActiveBtn() {
+    
+// }
 
 // ARRANCAMOS LA APP
 getApiData();
@@ -123,3 +137,4 @@ getApiData();
 // CREAMOS EL EVENTO
 searchBtn.addEventListener('click', getApiData);
 resetBtn.addEventListener('click', resetActiveBtn);
+// equisBtn.addEventListener('click', equisActiveBtn)
