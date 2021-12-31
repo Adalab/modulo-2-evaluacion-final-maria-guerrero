@@ -5,17 +5,20 @@
 }
 
 .main {
-    background: linear-gradient(to bottom, #360d6b 0%, #53a8b3b4 100%);
+    background: linear-gradient(to bottom, #240851 0%, #53a8b3b4 100%);
 }
 
 .header {
-    background: linear-gradient(to bottom, #745b43 0%, #360d6b 100%);
+    background-image: url(../images/headercards.jpg);
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
     font-family: 'Bebas Neue', cursive;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 50px;
+    padding: 80px;
 }
 .title {
     text-align: center;
@@ -115,7 +118,7 @@
     width: 50vw;
     padding: 15px;
     margin: 10px;
-    background-color: #7c53b3;
+    background-color: #784eaf;
     border: none;
     border-radius: 10px;
     color: white;
@@ -127,10 +130,10 @@
 }
 
 .searchStyles {
-    padding: 15px 15px 15px 15px;
+    padding: 17px 15px 17px 15px;
     border-radius: 10px;
     border: none;
-    background-color: #53a8b3b4;
+    background-color: #53a8b3;
     color: white;
     text-transform: uppercase;
     cursor: pointer;
