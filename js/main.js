@@ -18,7 +18,7 @@ function getApiData() {
     let inputValueEl = inputValue.value;
     // let inputValueEl = 'Nadja';
 
-    fetch(`https://api.jikan.moe/v3/search/anime?q=${inputValueEl}`).then(response => response.json())
+    fetch(`https://api.jikan.moe/v3/search/anime?q=${inputValueEl}&limit=6`).then(response => response.json())
     .then(data => {
         series = data.results;
         paintSeries();
@@ -94,7 +94,6 @@ function addSerie(ev) {
 }
     setLocalStorage();
     paintFavoriteItems();
-    paintSeries();
 };
 
 // 5. PINTAMOS LOS ELEMENTOS EN FAVORITOS
@@ -136,21 +135,20 @@ function resetActiveBtn() {
     paintFavoriteItems();
 }
 
-// 8. ELIMINAMOS INDIVIDUALMENTE LOS FAVORITOS
+// 8. HACEMOS QUE EL BOTON 'X' ELIMINE FAVORITOS INDIVIDUALMENTE
 function equisBtn() {
     const btnEquisButton = document.querySelectorAll('.js-equis-icon');
 
-    for(eachEquis of btnEquisButton) {
+    for(const eachEquis of btnEquisButton) {
         eachEquis.addEventListener('click', clickRemoveItem);
     }
 }
 
 function clickRemoveItem(event) {
-    //////// seleccionamos el id para resetear un elemento de favoritos
-    const clickRemoveFavorite = parseInt(event.currentTarget.parentElement.dataset.id);
-    //////// buscamos el id para resetear favoritos
-    const findItemId = favorites.find(
-    (eachFavorite) => eachFavorite.mal_id === clickRemoveFavorite);
+    //////// seleccionamos el id para resetear un elemento de favoritos:
+    const clickResetFavoriteId = parseInt(event.currentTarget.parentElement.dataset.id);
+    //////// buscamos el id para resetear favoritos:
+    const findItemId = favorites.find((eachFavorite) => eachFavorite.mal_id === clickResetFavoriteId);
 
     /////// buscamos la posición del id para eliminar el elemento seleccionado de favoritos
     const findPositionId = favorites.indexOf(findItemId);
@@ -161,8 +159,6 @@ function clickRemoveItem(event) {
     setLocalStorage();
     paintFavoriteItems();
 }
-
-// 9. AÑADIMOS UNA CLASE A UN ELEMENTO CLICKADO DE LOS RESULTADOS, CUANDO VAMOS A AGREGARLO A FAVORITOS
 
 // ARRANCAMOS LA APP
 getApiData();
