@@ -5,7 +5,6 @@ const seriesList = document.querySelector('.js-series-list');
 const favoriteList = document.querySelector('.js-favorite-list');
 const searchBtn = document.querySelector('.js-search');
 const resetBtn = document.querySelector('.js-reset-btn');
-const equisBtn = document.querySelector('.js-equis-icon');
 // GUARDAMOS LAS SERIES EN UN ARRAY
 let series = [];
 // GUARDAMOS LAS SERIES FAVORITAS EN UN ARRAY
@@ -19,7 +18,7 @@ function getApiData() {
     let inputValueEl = inputValue.value;
     // let inputValueEl = 'Nadja';
 
-    fetch(`https://api.jikan.moe/v3/search/anime?q=${inputValueEl}&limit=6`).then(response => response.json())
+    fetch(`https://api.jikan.moe/v3/search/anime?q=${inputValueEl}`).then(response => response.json())
     .then(data => {
         series = data.results;
         paintSeries();
@@ -70,6 +69,9 @@ function addSerie(ev) {
     }
     
     if(foundItem === undefined) {
+        // Con esta línea añade el borde al hacer click a la serie que queremos en favoritos:
+        ev.target.parentNode.classList.add('clickedBorderActive');
+
         // 1. buscamos en el array cual es el elemento que coincide con el id que hemos clickado, iterando:
         let foundSerie;
         for (const serie of series) {
@@ -84,9 +86,14 @@ function addSerie(ev) {
         image_url: foundSerie.image_url,
         title: foundSerie.title
     });
-} 
+
+} else { // <-- Aquí quitamos la clase clickedBorderActive al volver a seleccionar la serie
+    ev.target.parentNode.classList.remove('clickedBorderActive');
+    const removeSerieFavBorder = favorites.indexOf(foundItem);
+    favorites.splice(removeSerieFavBorder, 1);
+}
     setLocalStorage();
-    paintFavoriteItems(); // <-- lanzamos la función de abajo
+    paintFavoriteItems();
     paintSeries();
 };
 
@@ -111,6 +118,7 @@ function paintFavoriteItems() {
     for (const item of favorites) {
         favoriteList.innerHTML += getFavoriteHtmlCode(item);
     }
+    equisBtn();
 };
 
 // 6. GUARDAMOS EN EL LOCAL STORAGE
@@ -128,22 +136,33 @@ function resetActiveBtn() {
     paintFavoriteItems();
 }
 
-// 8. HACEMOS QUE AL CLICKAR EN UNA SERIE SE QUEDE MARCADA EN LOS RESULTADOS
-/* function serieMark() {
-    const clickId = parseInt(ev.currentTarget.dataset.id);
-    // const equisIconBtn = document.querySelector('.equisIcon');
-    const listMark = document.querySelector('.js-list');
+// 8. ELIMINAMOS INDIVIDUALMENTE LOS FAVORITOS
+function equisBtn() {
+    const btnEquisButton = document.querySelectorAll('.js-equis-icon');
 
-    let foundItem;
-    
-    if(foundItem === undefined) {
-        let foundStyleClick;
-        for (const serieClick of series) {
-            if(serieNoStyles.mal_id === clickId) {
-                foundStyleClick.innerHTML = serieClick.classList.add('.clickedBorderActive');
-            }      
-        }
-}; */
+    for(eachEquis of btnEquisButton) {
+        eachEquis.addEventListener('click', clickRemoveItem);
+    }
+}
+
+function clickRemoveItem(event) {
+    //////// seleccionamos el id para resetear un elemento de favoritos
+    const clickRemoveFavorite = parseInt(event.currentTarget.parentElement.dataset.id);
+    //////// buscamos el id para resetear favoritos
+    const findItemId = favorites.find(
+    (eachFavorite) => eachFavorite.mal_id === clickRemoveFavorite);
+
+    /////// buscamos la posición del id para eliminar el elemento seleccionado de favoritos
+    const findPositionId = favorites.indexOf(findItemId);
+
+    /////// eliminamos el elemento seleccionado
+    favorites.splice(findPositionId, 1);
+
+    setLocalStorage();
+    paintFavoriteItems();
+}
+
+// 9. AÑADIMOS UNA CLASE A UN ELEMENTO CLICKADO DE LOS RESULTADOS, CUANDO VAMOS A AGREGARLO A FAVORITOS
 
 // ARRANCAMOS LA APP
 getApiData();
