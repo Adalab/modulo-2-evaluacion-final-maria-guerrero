@@ -11,7 +11,7 @@
 }
 
 .header {
-    background-image: url(../images/headercards.jpg);
+    background-image: url(../images/headercards_.jpg);
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
@@ -48,7 +48,6 @@
 }
 
     .ulStylesFav {
-        /* margin-left: 40px; */
         list-style-type: none;
         display: flex;
         flex-wrap: wrap;
