@@ -19,7 +19,7 @@ function getApiData() {
     let inputValueEl = inputValue.value;
     // let inputValueEl = 'Nadja';
 
-    fetch(`https://api.jikan.moe/v3/search/anime?q=${inputValueEl}`).then(response => response.json())
+    fetch(`https://api.jikan.moe/v3/search/anime?q=${inputValueEl}&limit=6`).then(response => response.json())
     .then(data => {
         series = data.results;
         paintSeries();
@@ -60,11 +60,12 @@ function listenAddSeries() {
 // 4. IDENTIFICAMOS CUAL ES EL ELEMENTO CLICKADO
 function addSerie(ev) {
     const clickId = parseInt(ev.currentTarget.dataset.id);
+
     // Vemos si la serie está ya en favoritos
     let foundItem;
     for (const item of favorites) { // <-- recorremos todos los favoritos
-        if(item.mal_id === clickId) { 
-            foundItem = item;
+        if(item.mal_id === clickId) { //<-- si el id del item, es igual al id que he clickado, entonces:
+            foundItem = item; // <-- Guardamos el item en foundItem
         }      
     }
     
@@ -86,6 +87,7 @@ function addSerie(ev) {
 } 
     setLocalStorage();
     paintFavoriteItems(); // <-- lanzamos la función de abajo
+    paintSeries();
 };
 
 // 5. PINTAMOS LOS ELEMENTOS EN FAVORITOS
@@ -126,10 +128,22 @@ function resetActiveBtn() {
     paintFavoriteItems();
 }
 
-// // 8. HACEMOS QUE EL BOTÓN X ELIMINE UNA SERIE
-// function equisActiveBtn() {
+// 8. HACEMOS QUE AL CLICKAR EN UNA SERIE SE QUEDE MARCADA EN LOS RESULTADOS
+/* function serieMark() {
+    const clickId = parseInt(ev.currentTarget.dataset.id);
+    // const equisIconBtn = document.querySelector('.equisIcon');
+    const listMark = document.querySelector('.js-list');
+
+    let foundItem;
     
-// }
+    if(foundItem === undefined) {
+        let foundStyleClick;
+        for (const serieClick of series) {
+            if(serieNoStyles.mal_id === clickId) {
+                foundStyleClick.innerHTML = serieClick.classList.add('.clickedBorderActive');
+            }      
+        }
+}; */
 
 // ARRANCAMOS LA APP
 getApiData();
@@ -137,4 +151,3 @@ getApiData();
 // CREAMOS EL EVENTO
 searchBtn.addEventListener('click', getApiData);
 resetBtn.addEventListener('click', resetActiveBtn);
-// equisBtn.addEventListener('click', equisActiveBtn)
