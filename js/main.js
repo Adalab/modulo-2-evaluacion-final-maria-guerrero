@@ -18,7 +18,7 @@ function getApiData() {
     let inputValueEl = inputValue.value;
     // let inputValueEl = 'Nadja';
 
-    fetch(`https://api.jikan.moe/v3/search/anime?q=${inputValueEl}&limit=6`).then(response => response.json())
+    fetch(`https://api.jikan.moe/v3/search/anime?q=${inputValueEl}`).then(response => response.json())
     .then(data => {
         series = data.results;
         paintSeries();
