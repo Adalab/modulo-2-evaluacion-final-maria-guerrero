@@ -144,7 +144,7 @@
                 font-size: 15px;
             }
                 .serie_image:hover {
-                    transform: scale(1.03);
+                    transform: scale(1.04);
                     transition: transform ease 0.2s;
                 }
 
