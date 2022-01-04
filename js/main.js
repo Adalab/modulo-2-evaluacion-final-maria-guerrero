@@ -13,10 +13,10 @@ let favorites = [];
 // 1. OBTENEMOS LOS DATOS DEL API Y LO METEMOS EN UNA FUNCIÓN
 let inputValue = document.querySelector('.js-input');
 
-function getApiData() {
+function getApiData(ev) {
+    ev.preventDefault();
 
     let inputValueEl = inputValue.value;
-    // let inputValueEl = 'Nadja';
 
     fetch(`https://api.jikan.moe/v3/search/anime?q=${inputValueEl}`).then(response => response.json())
     .then(data => {
@@ -29,8 +29,20 @@ function getApiData() {
 // 2. PINTAMOS LAS SERIES
 function getSeriesHtmlCode(serie){
 
+    let foundItem;
+    // Hacemos un bucle para que compare el id de item(favoritos) con el id de las series, para después, abajo, hacer un if que añada o quite la clase clickBorderActive en función de si foundItem es undefined o no
+    for (const item of favorites) { 
+        if(item.mal_id === serie.mal_id) {
+            foundItem = item;
+        }      
+    }
+
     let htmlCode = '';
-    htmlCode += `<li class="js-list listStyle" data-id="${serie.mal_id}">`;
+    if(foundItem === undefined) {
+        htmlCode += `<li class="js-list listStyle" data-id="${serie.mal_id}">`;
+    } else {
+        htmlCode += `<li class="js-list listStyle clickedBorderActive" data-id="${serie.mal_id}">`;
+    }
     htmlCode += `<img class="serie_image" src="${serie.image_url}" alt="serie"`;
     htmlCode += `<h3 class="serie_name">${serie.title}</h3>`;
     htmlCode += `</li>`;
@@ -69,8 +81,9 @@ function addSerie(ev) {
     }
     
     if(foundItem === undefined) {
+        console.log('añadimos a favoritos');
         // Con esta línea añade el borde al hacer click a la serie que queremos en favoritos:
-        ev.target.parentNode.classList.add('clickedBorderActive');
+        ev.currentTarget.classList.add('clickedBorderActive');
 
         // 1. buscamos en el array cual es el elemento que coincide con el id que hemos clickado, iterando:
         let foundSerie;
@@ -86,9 +99,10 @@ function addSerie(ev) {
         image_url: foundSerie.image_url,
         title: foundSerie.title
     });
-
+    console.log(favorites);
 } else { // <-- Aquí quitamos la clase clickedBorderActive al volver a seleccionar la serie
-    ev.target.parentNode.classList.remove('clickedBorderActive');
+    console.log('sacamos de favoritos');
+    ev.currentTarget.classList.remove('clickedBorderActive');
     const removeSerieFavBorder = favorites.indexOf(foundItem);
     favorites.splice(removeSerieFavBorder, 1);
 }
@@ -104,7 +118,7 @@ function getFavoriteHtmlCode(item) {
     htmlCode += `<li class="js-favorites favoritesListStyle">`;
     htmlCode += `<div class="divImageEquis">`;
     htmlCode += `<img class="serie_image_favs" src="${item.image_url}">`;
-    htmlCode += `<button class="js-equis-icon equisIcon">x</button>`;
+    htmlCode += `<button class="js-equis-icon equisIcon" data-id="${item.mal_id}">x</button>`;
     htmlCode += `</div>`;
     htmlCode += `<h3 class="serie_name">${item.title}</h3>`;
     htmlCode += '</li>';
@@ -121,10 +135,20 @@ function paintFavoriteItems() {
 };
 
 // 6. GUARDAMOS EN EL LOCAL STORAGE
+function getLocalStorage() {
+    const localStorageFavorites = localStorage.getItem('favorites');
+    if(localStorageFavorites !== null) {
+        favorites = JSON.parse(localStorageFavorites);
+        paintFavoriteItems();
+    }
+}
+
 function setLocalStorage() {
     const stringifyFavorites = JSON.stringify(favorites);
     localStorage.setItem('favorites', stringifyFavorites);
 };
+
+getLocalStorage();
 
 // 7. HACEMOS QUE EL BOTÓN DE RESET FUNCIONE
 function resetActiveBtn() {
@@ -146,23 +170,22 @@ function equisBtn() {
 
 function clickRemoveItem(event) {
     //////// seleccionamos el id para resetear un elemento de favoritos:
-    const clickResetFavoriteId = parseInt(event.currentTarget.parentElement.dataset.id);
+    const clickResetFavoriteId = parseInt(event.currentTarget.dataset.id);
     //////// buscamos el id para resetear favoritos:
-    const findItemId = favorites.find((eachFavorite) => eachFavorite.mal_id === clickResetFavoriteId);
+    const findItemId = favorites.findIndex((eachFavorite) => eachFavorite.mal_id === clickResetFavoriteId);
 
     /////// buscamos la posición del id para eliminar el elemento seleccionado de favoritos
-    const findPositionId = favorites.indexOf(findItemId);
+    //const findPositionId = favorites.indexOf(findItemId);
 
     /////// eliminamos el elemento seleccionado
-    favorites.splice(findPositionId, 1);
+    favorites.splice(findItemId, 1);
 
     setLocalStorage();
     paintFavoriteItems();
+    paintSeries();
 }
 
-// ARRANCAMOS LA APP
-getApiData();
-
-// CREAMOS EL EVENTO
+// CREAMOS LOS EVENTOS
+formElement.addEventListener('submit', getApiData);
 searchBtn.addEventListener('click', getApiData);
 resetBtn.addEventListener('click', resetActiveBtn);
